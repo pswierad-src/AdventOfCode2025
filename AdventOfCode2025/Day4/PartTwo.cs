@@ -1,25 +1,36 @@
 ﻿namespace AdventOfCode2025.Day4;
 
-public class PartOne : IPartOne
+public class PartTwo : IPartTwo
 {
     public void Execute(string filePath)
     {
+        var previousRolls = 0;
         var rolls = 0;
         var grid = File.ReadAllLines(filePath).Select(l => l.ToCharArray()).ToArray();
 
-        for (var y = 0; y < grid.Length; y++)
+        while (true)
         {
-            for (var x = 0; x < grid[0].Length; x++)
+            previousRolls = rolls;
+            
+            for (var y = 0; y < grid.Length; y++)
             {
-                if(grid[y][x] == '.')
-                    continue;
+                for (var x = 0; x < grid[0].Length; x++)
+                {
+                    if(grid[y][x] == '.' || grid[y][x] == 'x')
+                        continue;
 
-                var neighbours = GetNeighbours(grid, x, y);
-                
-                if(neighbours.Count(n => n == '@') < 4)
-                    rolls++;
-                    
+                    var neighbours = GetNeighbours(grid, x, y);
+
+                    if (neighbours.Count(n => n == '@') < 4)
+                    {
+                        grid[y][x] = 'x';
+                        rolls++;
+                    }
+                }
             }
+
+            if (rolls == previousRolls)
+                break;
         }
 
         Console.WriteLine($"Rolls: {rolls}");
