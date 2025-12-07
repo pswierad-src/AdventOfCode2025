@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2025.Day4;
+﻿namespace AdventOfCode2025.Day3;
 
 public class PartOne : IPartOne
 {
